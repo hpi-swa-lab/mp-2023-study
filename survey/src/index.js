@@ -6,9 +6,8 @@ import App from "./App";
 let currentElem;
 setInterval(function () {
   const demographics = document.getElementById("demographics");
-  const postRun = document.getElementById("postRun");
+  const postRun = document.getElementById("tlx");
   const postParticipant = document.getElementById("postParticipant");
-  console.log(demographics, postRun, postParticipant);
 
   if (demographics && demographics !== currentElem) {
     currentElem = demographics;

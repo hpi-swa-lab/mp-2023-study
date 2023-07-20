@@ -21,7 +21,6 @@ function buildTask(statements, toProof, correctSelect, arrangeable) {
     correctSelection = correctSelect;
 
     let informationContainer1 = document.getElementById("information-container-1");
-    let informationContainer2 = document.getElementById("information-container-2");
     /*Sortable.create(informationContainer1, {sort: isSortable, animation: 100,
         ghostClass: 'blue-background-class'});
     Sortable.create(informationContainer2, {sort: isSortable, animation: 100,
@@ -154,10 +153,10 @@ function checkAnswers() {
         // End this study part.
         let taskEndTime = Date.now();
         let duration = taskEndTime - taskStartTime;
-        answerFeedback.innerText = "Correct answer.";
-        window.connection.finishStudy(duration);
+        answerFeedback.innerText = "Die Auswahl ist korrekt.";
+        window.connection.finishTask(duration);
     } else {
-        answerFeedback.innerText = "Wrong answer.";
+        answerFeedback.innerText = "Die Auswahl ist nicht korrekt.";
     }
 }
 

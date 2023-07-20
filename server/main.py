@@ -7,9 +7,9 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 state = {
-        "platform": "PC",
-        "surveyId": "demographics",
-        "stateId": 2,
+        "platform": "PC", # possible values: "PC", "VR", "Survey"
+        "surveyId": "demographics", # possible values: "demographics" and "tlx"
+        "stateId": 3,
         "toProof": "Beweise: Alle Weintrinker sind rothaarig",
         "statements": [
             "alle Weintrinker sind 20 Jahre alt",
@@ -39,6 +39,5 @@ def get_state():
 @cross_origin()
 def post_response():
     response = request.json
-    pass
     print(response)
     return "OK"

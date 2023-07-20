@@ -1,35 +1,31 @@
 import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { Gender, Likert, Text, Field } from './Widgets.js';
+import { Gender, Likert, Text, Field, Frequency } from './Widgets.js';
 
 export function Demographics({ report, loading }) {
   const age = useState(0);
   const gender = useState('female') 
   const genderOther = useState('') 
-  const progExp = useState('') 
-  const profProgExp = useState('') 
-  const jsExp = useState(4) 
-  const regexExp = useState(4) 
-  const clojureExp = useState(4) 
+  const occupation = useState('')
+  const digitalFreq = useState(4) 
+  const vrFreq = useState(4)
 
   return (
     <Container maxWidth="sm">
-      <Text control={age} question="What is your age?" />
+      <Text control={age} question="Wie alt sind Sie?" />
       <Gender control={gender} controlOther={genderOther} />
-      <Text control={progExp} question="How many years of programming experience do you have?" />
-      <Text control={profProgExp} question="How many years of professional programming experience do you have?" />
-      <Likert control={jsExp} question="I am familiar with the JavaScript language." />
-      <Likert control={regexExp} question="I am familiar with the Regular Expression language." />
-      <Likert control={clojureExp} question="I am familiar with the Clojure language." />
+      <Text control={occupation} question="Welchen Beruf üben Sie aus?" />
+      <Frequency control={digitalFreq} question="Wie oft nutzen Sie digitale Geräte (PC,Smartphone,...)?" />
+      <Frequency control={vrFreq} question="Wie oft nutzen Sie 'Virtual Reality' oder 'Augmented Reality'?" />
 
       <Button
         style={{ margin: "auto", display: "block", marginTop: "1rem" }}
         variant="contained"
         disabled={loading}
-        onClick={() => report("demographics", {values: [age[0], gender[0] === 'other' ? genderOther[0] : gender[0], progExp[0], profProgExp[0], jsExp[0], regexExp[0], clojureExp[0]]})}
+        onClick={() => report("demographics", {values: [age[0], gender[0] === 'other' ? genderOther[0] : gender[0], occupation[0], digitalFreq[0], vrFreq[0]]})}
       >
-        Submit
+        Absenden
       </Button>
     </Container>
   );

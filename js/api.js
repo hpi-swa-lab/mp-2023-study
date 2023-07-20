@@ -29,23 +29,26 @@ class Connection {
         }
     }
 
-    finishStudy(duration) {
+    report(data) {
+        data.stateId = this.currentState.stateId;
         fetch(serverResponse, {
             method: "POST",
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
               },
-            body: JSON.stringify({
-                stateId: this.currentState.stateId,
-                duration
-            })
+            body: JSON.stringify(data)
         })
     }
 
+    finishTask(duration) {
+        this.report({platform: "PC", duration})
+    }
+
     reportSurvey(event, extra) {
-        console.log(event);
-        console.log(extra);
+        let data = {platform: "Survey"};
+        data[event] = extra;
+        this.report(data)
     }
 
 
@@ -65,4 +68,4 @@ class Connection {
 
 window.connection = new Connection();
 window.connection.loop();
-window.reportSurvey = window.connection.reportSurvey;
+window.reportSurvey = (... args) => window.connection.reportSurvey(... args);
