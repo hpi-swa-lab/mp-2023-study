@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Study</title>
+    <meta name="author" content="frcroth" />
+
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="css/custom.css" />
+    <script defer="defer" src="/survey/build/static/js/main.4f410236.js"></script>
+    <link href="/survey/build/static/css/main.e6c13ad2.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Study</h1>
+    <div id="study-part-pc" class="hidden">
+        <button id="start-study-button" class="btn">Start study</button>
+        <div class="row">
+            <div class="hidden col-lg" id="information-container-1">
+            </div>
+            <!--
+            <div class="hidden col-lg" id="information-container-2">
+            </div>-->
+            <div class="col-2 ">
+                <p class="hidden" id="statement"></p>
+                <div class="hidden" id="answer">
+                    <form id="answer-form"  onsubmit="(e) => e.preventDefault()">
+                        <button class="btn" id="check-answer-button" type='button'>Check answer</button>
+                        <p id="answer-feedback"></p>
+                        <!--
+                <fieldset>
+                    <legend>Select the correct answer:</legend>
+                    <div>
+                        <input type="radio" id="answer-a" name="answer" autocomplete="off" value="a" />
+                        <label for="answer-a">This statement is true</label>
+                        </br>
+                        <input type="radio" id="answer-b" name="answer" autocomplete="off" value="b"/>
+                        <label for="answer-b">This statement is false</label>
+
+                    </div>
+                </fieldset>-->
+                    </form>
+                    <h2 id="time"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BOOTSTRAP -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/ui.js"></script>
+    
+</body>
+
+</html>

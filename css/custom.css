@@ -1,0 +1,38 @@
+#information-anchor {
+    overflow: scroll;
+    height: 600px;
+    border: 10px solid rgba(110, 112, 255, 0.13)
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+body {
+    padding: 5px;
+}
+
+* {
+    font-family: "Lato", sans-serif;
+    padding: 3px;
+}
+
+.row {
+    padding: 10px;
+}
+
+.information-bit {
+    position: absolute;
+    width: 400px;
+}
+
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
+
+.selected {
+    background: blue;
+    color: white;
+}
