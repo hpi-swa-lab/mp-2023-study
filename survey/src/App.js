@@ -43,7 +43,10 @@ function balancedLatinSquare(array, participantId) {
 function App({ demographics, postRun, postParticipant }) {
   const [loading, setLoading] = useState(false);
 
-  const report = async (event, extra) => window.reportSurvey(event, extra);
+  const report = async (event, extra) => {
+    setLoading(true);
+    window.reportSurvey(event, extra);
+  };
 
   const main = postRun ? (
     <TLX

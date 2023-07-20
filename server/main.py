@@ -7,9 +7,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 state = {
-        "platform": "PC", # possible values: "PC", "VR", "Survey"
-        "surveyId": "demographics", # possible values: "demographics" and "tlx"
-        "stateId": 3,
+        "view": "TLX", # possible values: "PC", "VR", "Demographics", "TLX"
+        "stateId": 2,
         "toProof": "Beweise: Alle Weintrinker sind rothaarig",
         "statements": [
         {

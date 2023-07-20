@@ -15,18 +15,15 @@ class Connection {
     }
 
     currentState = {
-        platform: "PC",
+        view: "PC",
         stateId: 0
     }
 
     updateState(stateJson) {
         let state = JSON.parse(stateJson);
-        if (state.stateId == this.currentState.stateId && !(state.forceRestart)) return;
-        if (state.platform == "VR") return;
-        if (state.platform == "PC" || state.platform == "Survey") {
-            window.updateUIForState(state);
-            this.currentState.stateId = state.stateId;
-        }
+        if (state.stateId == this.currentState.stateId) return;
+        window.updateUIForState(state);
+        this.currentState.stateId = state.stateId;
     }
 
     report(data) {
@@ -42,11 +39,11 @@ class Connection {
     }
 
     finishTask(duration) {
-        this.report({ platform: "PC", duration })
+        this.report({ view: this.currentState.view, duration })
     }
 
     reportSurvey(event, extra) {
-        let data = { platform: "Survey" };
+        let data = { view: this.currentState.view };
         data[event] = extra;
         this.report(data)
     }

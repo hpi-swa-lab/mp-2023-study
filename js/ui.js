@@ -155,21 +155,29 @@ function checkAnswers() {
     }
 }
 
-function addSurvey(surveyId) {
+function addSurvey(view) {
     let d = document.createElement("div");
-    d.id = surveyId;
+    d.id = view == "Demographics" ? "demographics" : "tlx";
     d.classList.add("react-imported-div")
-    document.body.appendChild(d);
+    document.getElementById("react-anchor").appendChild(d);
+}
+
+function addVRHint() {
+    document.getElementById("vr-hint").innerHTML = "<h1>Der nächste Part der Studie findet in VR statt.</h1>";
 }
 
 function updateUIForState(state) {
     document.getElementsByClassName("react-imported-div")[0]?.remove();
-    if (state.platform == "PC") {
+    document.getElementById("vr-hint").innerHTML = "";
+    if (state.view == "PC") {
 
         buildTask(state.statements, state.toProof, state.arrangeable)
-    } else if (state.platform = "Survey") {
+    } else if (state.view == "Demographics" || state.view == "TLX") {
         document.getElementById("study-part-pc").classList.add("hidden")
-        addSurvey(state.surveyId);
+        addSurvey(state.view);
+    } else if (state.view == "VR") {
+        document.getElementById("study-part-pc").classList.add("hidden")
+        addVRHint();
     }
 
 }
