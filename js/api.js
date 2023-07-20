@@ -36,17 +36,17 @@ class Connection {
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
-              },
+            },
             body: JSON.stringify(data)
         })
     }
 
     finishTask(duration) {
-        this.report({platform: "PC", duration})
+        this.report({ platform: "PC", duration })
     }
 
     reportSurvey(event, extra) {
-        let data = {platform: "Survey"};
+        let data = { platform: "Survey" };
         data[event] = extra;
         this.report(data)
     }
@@ -68,4 +68,4 @@ class Connection {
 
 window.connection = new Connection();
 window.connection.loop();
-window.reportSurvey = (... args) => window.connection.reportSurvey(... args);
+window.reportSurvey = (...args) => window.connection.reportSurvey(...args);

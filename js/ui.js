@@ -8,49 +8,40 @@ function createInformationContainer(information, draggable) {
     informationP.classList.add("prevent-select");
     informationP.innerText = information;
     div.appendChild(informationP);
-    if(!draggable){
-    div.onmouseup = () => {  div.classList.contains("selected") ? div.classList.remove("selected") : div.classList.add("selected") }
+    if (!draggable) {
+        div.onmouseup = () => { div.classList.contains("selected") ? div.classList.remove("selected") : div.classList.add("selected") }
     }
     return div;
 }
 
-let correctSelection = [];
+let statements = [];
 
-function buildTask(statements, toProof, correctSelect, arrangeable) {
+function buildTask(stmts, toProof, arrangeable) {
     document.getElementById("study-part-pc").classList.remove("hidden")
-    correctSelection = correctSelect;
+    statements = stmts;
 
     let informationContainer1 = document.getElementById("information-container-1");
-    /*Sortable.create(informationContainer1, {sort: isSortable, animation: 100,
-        ghostClass: 'blue-background-class'});
-    Sortable.create(informationContainer2, {sort: isSortable, animation: 100,
-        ghostClass: 'blue-background-class'});*/
 
     let columnHeight = 8;
-    statements.forEach((informationBit, index) => {
+    statements.forEach((statementSpec, index) => {
+        let informationBit = statementSpec.text;
+        statementSpec.index = index; // Write index here to match correct answers later.
         let container = createInformationContainer(informationBit, arrangeable);
-        if(arrangeable) {
-        dragElement(container);
+        if (arrangeable) {
+            dragElement(container);
         }
         informationContainer1.appendChild(container);
-        if(index + 1 < columnHeight) {
+        if (index + 1 < columnHeight) {
             container.style.left = 10 + 'px';
             container.style.top = index * 50 + 'px';
         } else {
             container.style.left = 420 + 'px';
             container.style.top = (index + 1 - columnHeight) * 50 + 'px';
         }
-        
+
         container.setAttribute('statement-index', index);
-        
+
     })
-    /*
-    statements[1].forEach((informationBit, index) => {
-        let container = createInformationContainer(informationBit);
-        dragElement(container);
-        informationContainer2.appendChild(container);
-        container.style.top = index * 50 + 'px';
-    })*/
     document.getElementById("statement").innerHTML = toProof;
     document.getElementById("start-study-button").onclick = startStudy
     document.querySelectorAll("input").forEach(input => input.onclick = endStudy)
@@ -129,7 +120,7 @@ function dragElement(elmnt) {
         original Top ${originalTop},
         offset left ${elmnt.offsetLeft},
         original left ${originalLeft}`)
-        if( elmnt.offsetTop == originalTop &&  elmnt.offsetLeft == originalLeft) {
+        if (elmnt.offsetTop == originalTop && elmnt.offsetLeft == originalLeft) {
             console.log("No drag")
             // No drag has happened
             elmnt.classList.contains("selected") ? elmnt.classList.remove("selected") : elmnt.classList.add("selected")
@@ -137,19 +128,23 @@ function dragElement(elmnt) {
     }
 }
 
-function getSelectedAnswersSet() {
-    let selectedStatements = [... document.querySelectorAll(".selected")];
+function getSelectedAnswersIndices() {
+    let selectedStatements = [...document.querySelectorAll(".selected")];
     return selectedStatements.map(node => node.getAttribute("statement-index"));
 }
 
-function arraysHaveSameElements(a1,a2) {
-    return a1.sort().join(',')=== a2.sort().join(',');
+function getCorrectAnswerIndices() {
+    return statements.filter(stmt => stmt.correct).map(stmt => stmt.index);
+}
+
+function arraysHaveSameElements(a1, a2) {
+    return a1.sort().join(',') === a2.sort().join(',');
 }
 
 function checkAnswers() {
-    let selectedStatements = getSelectedAnswersSet();
+    let selectedStatements = getSelectedAnswersIndices();
     let answerFeedback = document.getElementById("answer-feedback")
-    if(arraysHaveSameElements(selectedStatements, correctSelection)) {
+    if (arraysHaveSameElements(selectedStatements, getCorrectAnswerIndices())) {
         // End this study part.
         let taskEndTime = Date.now();
         let duration = taskEndTime - taskStartTime;
@@ -170,13 +165,13 @@ function addSurvey(surveyId) {
 function updateUIForState(state) {
     document.getElementsByClassName("react-imported-div")[0]?.remove();
     if (state.platform == "PC") {
-        
-        buildTask(state.statements, state.toProof, state.correctSelection, state.arrangeable)
-    } else if  (state.platform = "Survey") {
+
+        buildTask(state.statements, state.toProof, state.arrangeable)
+    } else if (state.platform = "Survey") {
         document.getElementById("study-part-pc").classList.add("hidden")
         addSurvey(state.surveyId);
     }
-    
+
 }
 
 window.updateUIForState = updateUIForState

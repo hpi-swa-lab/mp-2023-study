@@ -12,19 +12,55 @@ state = {
         "stateId": 3,
         "toProof": "Beweise: Alle Weintrinker sind rothaarig",
         "statements": [
-            "alle Weintrinker sind 20 Jahre alt",
-            "alle Weintrinker sind irisch",
-            "alle Weintrinker wohnen in potsdam",
-            "alle potsdamer sind klein",
-            "alle iren haben große füße",
-            "alle potsdamer, die große füße haben, sind abenteuerlustig",
-            "alle potsdamer, die große füße haben und drei füße haben, sind irisch",
-            "alle iren sind reich",
-            "alle abenteuerlustigen, die medizin studieren, sind rothaarig",
-            "alle münsteraner studieren medizin",
-            "alle briten sind münsteraner",
-            "alle abenteuerlustigen, die klein sind, sind rothaarig",
-        ],
+        {
+            "text": "alle Weintrinker sind 20 Jahre alt",
+            "correct": False
+        },
+        {
+            "text": "alle Weintrinker sind irisch",
+            "correct": True
+        },
+        {
+            "text": "alle Weintrinker wohnen in potsdam",
+            "correct": True
+        },
+        {
+            "text": "alle potsdamer sind klein",
+            "correct": True
+        },
+        {
+            "text": "alle iren haben große füße",
+            "correct": True
+        },
+        {
+            "text": "alle potsdamer, die große füße haben, sind abenteuerlustig",
+            "correct": True
+        },
+        {
+            "text": "alle potsdamer, die große füße haben und drei füße haben, sind irisch",
+            "correct": False
+        },
+        {
+            "text": "alle iren sind reich",
+            "correct": False
+        },
+        {
+            "text": "alle abenteuerlustigen, die medizin studieren, sind rothaarig",
+            "correct": False
+        },
+        {
+            "text": "alle münsteraner studieren medizin",
+            "correct": False
+        },
+        {
+            "text": "alle briten sind münsteraner",
+            "correct": False
+        },
+        {
+            "text": "alle abenteuerlustigen, die klein sind, sind rothaarig",
+            "correct": True
+        }
+    ],
         "correctSelection" : [1,2,3,4,5,11],
         "arrangeable": True,
         "forceRestart": False
