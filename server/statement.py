@@ -32,6 +32,7 @@ class State:
     toProof: str
     statements: List[Statement]
     arrangeable: bool
+    leftHand: bool
 
     def as_dict(self):
         return dataclasses.asdict(self)
@@ -62,7 +63,8 @@ test_state = State(
         Statement(
             text="alle abenteuerlustigen, die klein sind, sind rothaarig", correct=True),
     ],
-    arrangeable=True
+    arrangeable=True,
+    leftHand=False,
 )
 
 

@@ -17,6 +17,7 @@ tasks_per_condition = int(len(statementsMatrix[0]) / len(conditions))
 participantId = int(input("participantId (integer only): "))
 stateId = 0
 state = None
+leftHand = False
 
 
 @app.route("/status")
@@ -45,7 +46,8 @@ def get_state():
             stateId=stateId,
             toProof="",
             statements=[],
-            arrangeable=False
+            arrangeable=False,
+            leftHand=leftHand,
         )
         return state.as_json()
 
@@ -55,7 +57,8 @@ def get_state():
             stateId=stateId,
             toProof="",
             statements=[],
-            arrangeable=False
+            arrangeable=False,
+            leftHand=leftHand,
         )
         return state.as_json()
 
@@ -71,7 +74,8 @@ def get_state():
         toProof=toProof,
         statements=statements,
         arrangeable=True if view in [
-            Condition.DesktopDecomp, Condition.VRDecomp] else False
+            Condition.DesktopDecomp, Condition.VRDecomp] else False,
+        leftHand=leftHand
     )
     return state.as_json()
 
@@ -80,6 +84,9 @@ def get_state():
 @cross_origin()
 def post_response():
     global stateId, state, participantId
+
+    if state == None:
+        return "state is NONE. Please call /status get request first", 400
 
     path = f"responses/{participantId}-{stateId}.json"
     with open(path, 'x') as outfile:
