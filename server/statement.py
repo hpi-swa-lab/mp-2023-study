@@ -6,11 +6,6 @@ import json
 import random
 
 
-class Platform(str, Enum):
-    PC = "PC"
-    VR = "VR"
-
-
 class SurveyId(str, Enum):
     DEMOGRAPHICS = "demographics"
     TLX = "tlx"
@@ -32,8 +27,7 @@ class Statement:
 
 @dataclass()
 class State:
-    platform: Platform
-    surveyId: SurveyId | Condition
+    view: SurveyId | Condition
     stateId: int
     toProof: str
     statements: List[Statement]
@@ -47,8 +41,7 @@ class State:
 
 
 test_state = State(
-    platform=Platform.PC,
-    surveyId=SurveyId.DEMOGRAPHICS,
+    view=SurveyId.DEMOGRAPHICS,
     stateId=2,
     toProof="Beweise: Alle Weintrinker sind rothaarig",
     statements=[
