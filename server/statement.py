@@ -68,22 +68,22 @@ test_state = State(
 )
 
 
-def get_statements(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub1: str, sub2: str, sub3: str, sub4: str, cit1: str, cit2: str, nat1: str, nat2: str):
+def get_statements(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub1: str, sub2: str, sub3: str, sub4: str, job1: str, job2: str, nat1: str, nat2: str):
     """returns a (toProof, statements list) tuple for the given adjectives, subjects, cities and nationalities. toProof is always true and has the form 'Beweise: Alle <sub3> sind <adj1>' """
     statements = [
         Statement(f"alle {adj2}en, die {adj3} sind, sind {adj1}", True),
-        Statement(f"alle {cit1}er sind {adj2}", True),
-        Statement(f"alle {sub3} sind {cit1}er", True),
-        Statement(f"alle {cit1}er, die {sub2} haben, sind {adj3}", True),
+        Statement(f"alle {job1} sind {adj2}", True),
+        Statement(f"alle {sub3} sind {job1}", True),
+        Statement(f"alle {job1}, die {sub2} haben, sind {adj3}", True),
         Statement(f"alle {sub3} sind {nat1}", True),
         Statement(f"alle {nat1} haben {sub2}", True),
         Statement(f"alle {sub3} sind {adj5}", False),
         Statement(f"alle {nat1} sind {adj4}", False),
         Statement(
-            f"alle {cit1}er, die {sub2} und {sub4} haben, sind {nat1}", False),
-        Statement(f"alle {adj3}en, die {sub1} haben, sind {adj1}", False),
-        Statement(f"alle {cit2}er haben {sub1}", False),
-        Statement(f"alle {nat2} sind {cit2}er", False),
+            f"alle {job1}, die {sub2} und {sub4} haben, sind {nat1}", False),
+        Statement(f"alle {adj3}en, die {sub1}e haben, sind {adj1}", False),
+        Statement(f"alle {job2}en haben {sub1}e", False),
+        Statement(f"alle {nat2} sind {job2}en", False),
     ]
     random.shuffle(statements)
 
@@ -94,33 +94,43 @@ def get_statements(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub1: 
 
 
 statementsMatrix = [
-    # 12 zufällige adjektive
-    ['schillernd', 'fesselnd', 'zauberhaft', 'wunderbar', 'bemerkenswert', 'flauschig',
-        'glitzernd', 'herrlich', 'strahlend', 'atemberaubend', 'furchtlos', 'zauberhaft'],
-    ['spritzig', 'knallig', 'verrückt', 'zaubernd', 'herzerwärmend', 'schelmisch',
-        'glänzend', 'zauberhaft', 'leuchtend', 'strahlend', 'atemlos', 'phantastisch'],
-    ['knallig', 'fröhlich', 'verrückt', 'malerisch', 'herzergreifend', 'glamourös',
-        'abenteuerlich', 'leuchtend', 'quirlig', 'zauberhaft', 'fesselnd', 'fantastisch'],
-    ['fröhlich', 'verwegen', 'glamourös', 'gemütlich', 'phantastisch', 'munter',
-        'zaubernd', 'strahlend', 'glänzend', 'herzlich', 'mutig', 'funkelnd'],
-    [f"{i}" for i in range(20, 33)],
-    # 4 zufällige Substantive
-    ['Blume', 'Kaffee', 'Sonne', 'Berg', 'Schmetterling', 'Ozean',
-        'Wald', 'Regenbogen', 'Stern', 'Einhorn', 'Buch', 'Drache'],
-    ['Katzen', 'Hunde', 'Blumen', 'Bücher', 'Sterne', 'Wolken',
-        'Schlüssel', 'Tische', 'Berge', 'Häuser', 'Stühle', 'Bäume'],
+    # adj1
+    ['freundlich', 'einundzwanzig', 'zweiundzwanzig', 'empathisch', 'vierundzwanzig', 'gesellig',
+        'intelligent', 'siebenundzwanzig', 'achtundzwanzig', 'zielstrebig', 'lustig', 'einfühlsam'],
+    # adj2
+    ['blauhaarig', 'rothaarig', 'verrückt', 'toll', 'nett', 'gemein',
+        'groß', 'klein', 'breit', 'schlank', 'braunhaarig', 'blond'],
+    # adj3
+    ['cool', 'fröhlich', 'schlau', 'verrückt', 'neugierig', 'stark',
+        'abenteuerlustig', 'schlau', 'extravertiert', 'introvertiert', 'ruhig', 'sportlich'],
+    # adj4
+    ['fröhlich', 'groß', 'offen', 'herzlich', 'zurückhaltend', 'munter',
+        'fröhlich', 'freundlich', 'aufgeschlossen', 'herzlich', 'mutig', 'fleißig'],
+    # adj5
+    ['zwanzig', 'kreativ', 'zuverlässig', 'dreiundzwanzig', 'verliebt', 'fünfundzwanzig',
+        'sechsundzwanzig', 'charmant', 'geduldig', 'neunundzwanzig', 'dreißig', 'einunddreißig'],
+    # sub1
+    ['Flugzeug', 'Boot', 'Haustier', 'Tisch', 'Schmetterling', 'Ozean',
+        'Monitor', 'Hund', 'Haustier', 'Pferd', 'Balkon', 'Regenschirm'],
+    # sub2
+    ['Katzen', 'Hunde', 'Blumen', 'Bücher', 'Haustiere', 'Wohnungen',
+        'Schlüssel', 'Tische', 'Kinder', 'Häuser', 'Stühle', 'Fahrräder'],
+    # sub3
     ['Max', 'Sophie', 'Lukas', 'Emily', 'Paul', 'Lena',
         'Jonas', 'Anna', 'Finn', 'Emma', 'Tim', 'Hannah'],
+    # sub4
     ['Augen', 'Haare', 'Ohren', 'Arme', 'Beine', 'Hände',
-        'Finger', 'Zehen', 'Nasen', 'Lippen', 'Schultern', 'Knie'],
-    # 2 zufällige Städte
-    ['Berlin', 'New York', 'Tokio', 'London', 'Paris', 'Rom', 'Sydney',
-        'Istanbul', 'Rio de Janeiro', 'Moskau', 'Kapstadt', 'Toronto'],
-    ['Shanghai', 'Los Angeles', 'Dubai', 'Mumbai', 'Barcelona', 'Amsterdam',
-        'Seoul', 'Singapur', 'Kairo', 'Bangkok', 'Stockholm', 'Lissabon'],
-    # 2 zufällige Nationalitäten
+        'Finger', 'Zehen', 'Nasen', 'Ohren', 'Schultern', 'Knie'],
+    # job1
+    ['Schuster', 'Designer', 'Lehrer', 'Verkäufer', 'Programmierer', 'Kellner',
+        'Schneider', 'Bäcker', 'Bauarbeiter', 'Politiker', 'Schornsteinfeger', 'Schauspieler'],
+    # job2
+    ['Polizist', 'Lieferant', 'Architekt', 'Journalist', 'Astronaut', 'Psychotherapeut',
+        'Laborant', 'Fotograf', 'Produzent', 'Pilot', 'Jurist', 'Konditor'],
+    # nat1
     ['Iren', 'Deutsche', 'Franzosen', 'Italiener', 'Schweden', 'Mexikaner',
      'Amerikaner', 'Kanadier', 'Australier', 'Spanier', 'Brasilianer', 'Griechen'],
+    # nat2
     ['Briten', 'Schweizer', 'Österreicher', 'Chinesen', 'Japaner', 'Inder',
      'Südafrikaner', 'Ägypter', 'Thailänder', 'Griechen', 'Kolumbianer', 'Türken']
 ]
