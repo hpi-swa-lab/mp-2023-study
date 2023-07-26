@@ -10,46 +10,43 @@ export function TLX({ report, loading }) {
   const questions = [
     {
       key: "mental",
-      caption: "Mental Demand",
-      question: "How mentally demanding was the task?",
+      caption: "Geistige Anforderung",
+      question: "Wie stark hat dich die Aufgabe geistig gefordert?",
       low: "Very low",
       high: "Very high",
     },
     {
       key: "physical",
-      caption: "Physical Demand",
-      question: "How physically demanding was the task?",
+      caption: "Körperliche Anforderung",
+      question: "Wie stark hat dich die Aufgabe körperlich gefordert?",
       low: "Very low",
       high: "Very high",
     },
     {
       key: "temporal",
-      caption: "Temporal Demand",
-      question: "How hurried or rushed was the pace of the task?",
+      caption: "Zeitdruck",
+      question: "Wie gehetzt oder unter zeitlichem Druck warst du bei der Aufgabe?",
       low: "Very low",
       high: "Very high",
     },
     {
       key: "performance",
-      caption: "Performance",
-      question:
-        "How successful were you in accomplishing what you were asked to do?",
+      caption: "Leistung",
+      question: "Wie erfolgreich hast du die Aufgabe erfüllen können?",
       low: "Perfect",
       high: "Failure",
     },
     {
       key: "effort",
-      caption: "Effort",
-      question:
-        "How hard did you have to work to accomplish your level of performance?",
+      caption: "Anstrengung",
+      question: "Wie sehr hast du dich anstrengen müssen um dieses Level an Leistung zu erbringen?",
       low: "Very low",
       high: "Very high",
     },
     {
       key: "frustration",
       caption: "Frustration",
-      question:
-        "How insecure, discouraged, irritated, stressed, and annoyed were you?",
+      question: "Wie unsicher, entmutigt, irritiert, gestresst oder genervt bist du gewesen?",
       low: "Very low",
       high: "Very high",
     },
