@@ -17,13 +17,19 @@ function createInformationContainer(information, draggable) {
 let statements = [];
 
 function buildTask(stmts, toProof, arrangeable) {
-    document.getElementById("study-part-pc").classList.remove("hidden")
+    document.getElementById("study-part-pc").classList.remove("hidden");
+    document.getElementById("information-container-1").classList.add("hidden");
+    document.getElementById("statement").classList.add("hidden");
+    document.getElementById("answer").classList.add("hidden");
+    document.getElementById("answer-feedback").innerText = "";
+    document.getElementById("check-answer-button").disabled = false;
     statements = stmts;
 
     let informationContainer1 = document.getElementById("information-container-1");
     informationContainer1.innerHTML = "";    
 
     let columnHeight = 8;
+    let elementHeight = 60;
     statements.forEach((statementSpec, index) => {
         let informationBit = statementSpec.text;
         statementSpec.index = index; // Write index here to match correct answers later.
@@ -34,10 +40,10 @@ function buildTask(stmts, toProof, arrangeable) {
         informationContainer1.appendChild(container);
         if (index + 1 < columnHeight) {
             container.style.left = 10 + 'px';
-            container.style.top = index * 50 + 'px';
+            container.style.top = index * elementHeight + 'px';
         } else {
             container.style.left = 420 + 'px';
-            container.style.top = (index + 1 - columnHeight) * 50 + 'px';
+            container.style.top = (index + 1 - columnHeight) * elementHeight + 'px';
         }
 
         container.setAttribute('statement-index', index);
@@ -69,6 +75,8 @@ function endStudy() {
     console.log(result);
 }
 
+let zIndexCounter = 1;
+
 // https://www.w3schools.com/howto/howto_js_draggable.asp
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -92,6 +100,7 @@ function dragElement(elmnt) {
         document.dragOngoing = true;
         originalTop = elmnt.offsetTop;
         originalLeft = elmnt.offsetLeft;
+        elmnt.style.zIndex = zIndexCounter++;
     }
 
     function elementDrag(e) {
@@ -108,7 +117,7 @@ function dragElement(elmnt) {
     }
 
     function closeDragElement(e) {
-        console.log("on mouse up")
+        // console.log("on mouse up")
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
@@ -116,13 +125,13 @@ function dragElement(elmnt) {
         e.preventDefault();
         elmnt.onclick = onclickBackup;
 
-        console.log(`
+        /*console.log(`
         offset top ${elmnt.offsetTop},
         original Top ${originalTop},
         offset left ${elmnt.offsetLeft},
-        original left ${originalLeft}`)
+        original left ${originalLeft}`)*/
         if (elmnt.offsetTop == originalTop && elmnt.offsetLeft == originalLeft) {
-            console.log("No drag")
+            // console.log("No drag")
             // No drag has happened
             elmnt.classList.contains("selected") ? elmnt.classList.remove("selected") : elmnt.classList.add("selected")
         }
@@ -144,12 +153,13 @@ function arraysHaveSameElements(a1, a2) {
 
 function checkAnswers() {
     let selectedStatements = getSelectedAnswersIndices();
-    let answerFeedback = document.getElementById("answer-feedback")
+    let answerFeedback = document.getElementById("answer-feedback");
     if (arraysHaveSameElements(selectedStatements, getCorrectAnswerIndices())) {
         // End this study part.
         let taskEndTime = Date.now();
         let duration = taskEndTime - taskStartTime;
         answerFeedback.innerText = "Die Auswahl ist korrekt.";
+        document.getElementById("check-answer-button").disabled = true;
         window.connection.finishTask(duration);
     } else {
         answerFeedback.innerText = "Die Auswahl ist nicht korrekt.";
