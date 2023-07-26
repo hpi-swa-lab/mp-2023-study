@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
-export function TLX({ report, loading }) {
+export function TLX({ report, loading}) {
   const [scores, setScores] = useState([50, 50, 50, 50, 50, 50]);
 
   const questions = [

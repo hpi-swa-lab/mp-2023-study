@@ -50,14 +50,14 @@ function App({ demographics, postRun, postParticipant }) {
 
   const main = postRun ? (
     <TLX
-      disabled={loading}
+      loading={loading}
       report={async (...args) => {
         await report(...args);
       }}
     ></TLX>
   ) : demographics ? (
     <Demographics
-      disabled={loading}
+      loading={loading}
       report={async (...args) => {
         await report(...args);
       }}
