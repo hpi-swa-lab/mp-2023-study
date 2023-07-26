@@ -21,9 +21,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run build-rename",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-rename": "npm run build-rename-js && npm run build-rename-css",
+    "build-rename-js": "find build/static/js -name \"main.*.js\" -exec  sh -c 'x={}; mv \"$x\" build/static/js/main.js' \\;",
+    "build-rename-css": "find build/static/css -name \"main.*.css\" -exec  sh -c 'x={}; mv \"$x\" build/static/css/main.css' \\;"
   },
   "eslintConfig": {
     "extends": [
