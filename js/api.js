@@ -15,14 +15,15 @@ class Connection {
     }
 
     currentState = {
-        view: "PC",
-        stateId: 0
+        view: "None",
+        stateId: -1
     }
 
     updateState(stateJson) {
         let state = JSON.parse(stateJson);
         if (state.stateId == this.currentState.stateId) return;
         window.updateUIForState(state);
+        this.currentState.view = state.view;
         this.currentState.stateId = state.stateId;
     }
 

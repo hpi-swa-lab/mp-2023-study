@@ -21,6 +21,7 @@ function buildTask(stmts, toProof, arrangeable) {
     statements = stmts;
 
     let informationContainer1 = document.getElementById("information-container-1");
+    informationContainer1.innerHTML = "";    
 
     let columnHeight = 8;
     statements.forEach((statementSpec, index) => {
@@ -157,7 +158,7 @@ function checkAnswers() {
 
 function addSurvey(view) {
     let d = document.createElement("div");
-    d.id = view == "Demographics" ? "demographics" : "tlx";
+    d.id = view;
     d.classList.add("react-imported-div")
     document.getElementById("react-anchor").appendChild(d);
 }
@@ -169,13 +170,13 @@ function addVRHint() {
 function updateUIForState(state) {
     document.getElementsByClassName("react-imported-div")[0]?.remove();
     document.getElementById("vr-hint").innerHTML = "";
-    if (state.view == "PC") {
+    if (state.view.startsWith("Desktop")) {
 
         buildTask(state.statements, state.toProof, state.arrangeable)
-    } else if (state.view == "Demographics" || state.view == "TLX") {
+    } else if (state.view == "demographics" || state.view == "tlx") {
         document.getElementById("study-part-pc").classList.add("hidden")
         addSurvey(state.view);
-    } else if (state.view == "VR") {
+    } else if (state.view.startsWith("VR")) {
         document.getElementById("study-part-pc").classList.add("hidden")
         addVRHint();
     }
