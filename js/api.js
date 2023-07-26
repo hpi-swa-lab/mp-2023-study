@@ -2,16 +2,14 @@
 let server = "http://127.0.0.1:5000/status";
 let serverResponse = "http://127.0.0.1:5000/response";
 class Connection {
-    poll() {
-        const httpRequest = new XMLHttpRequest();
-        httpRequest.open("GET", server, true);
-        httpRequest.onload = () => {
-            this.updateState(httpRequest.response);
-        };
-        httpRequest.send();
-        httpRequest.onerror = (e) => {
-            console.error(e);
-        }
+    
+    async poll() {
+        const response = await fetch(server, {
+            method: "GET",
+            mode: "cors"
+        })
+        const state = await response.json();
+        this.updateState(state);
     }
 
     currentState = {
@@ -19,8 +17,7 @@ class Connection {
         stateId: -1
     }
 
-    updateState(stateJson) {
-        let state = JSON.parse(stateJson);
+    updateState(state) {
         if (state.stateId == this.currentState.stateId) return;
         window.updateUIForState(state);
         this.currentState.view = state.view;

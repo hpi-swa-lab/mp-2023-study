@@ -28,6 +28,7 @@ def get_state():
 
     experiment_conditions: list[Condition] = balancedLatinSquare(
         conditions, participantId % len(conditions))
+    print(json.dumps(experiment_conditions))
 
     views = [
         SurveyId.DEMOGRAPHICS,
