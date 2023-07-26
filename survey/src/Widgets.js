@@ -71,3 +71,12 @@ export function Gender({control: [get, set], controlOther: [getOther, setOther]}
   </Field>;
 }
 
+export function Handedness({control: [get, set]}) {
+  return <Field question="Sind Sie links oder rechtshändig?">
+    <RadioGroup value={get} onChange={e => set(e.target.value)}>
+      <FormControlLabel value="left-handed" control={<Radio />} label="linkshändig" />
+      <FormControlLabel value="right-handed" control={<Radio />} label="rechtshändig" />
+      <FormControlLabel value="ambidexterity" control={<Radio />} label="beidhändig (Ambidextrie)" />
+    </RadioGroup>
+  </Field>
+}

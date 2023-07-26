@@ -15,14 +15,15 @@ class Connection {
     }
 
     currentState = {
-        view: "PC",
-        stateId: 0
+        view: "None",
+        stateId: -1
     }
 
     updateState(stateJson) {
         let state = JSON.parse(stateJson);
         if (state.stateId == this.currentState.stateId) return;
         window.updateUIForState(state);
+        this.currentState.view = state.view;
         this.currentState.stateId = state.stateId;
     }
 
@@ -40,12 +41,14 @@ class Connection {
 
     finishTask(duration) {
         this.report({ view: this.currentState.view, duration })
+        setTimeout(this.poll(), 100);
     }
 
     reportSurvey(event, extra) {
         let data = { view: this.currentState.view };
         data[event] = extra;
-        this.report(data)
+        this.report(data);
+        setTimeout(this.poll(), 100);
     }
 
 
@@ -54,7 +57,7 @@ class Connection {
         if (!this.stopped) {
             this.poll();
 
-            setTimeout(() => this.loop(), 5000);
+            setTimeout(() => this.loop(), 2000);
         }
     }
 
