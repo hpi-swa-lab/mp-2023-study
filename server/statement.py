@@ -33,6 +33,7 @@ class State:
     statements: List[Statement]
     arrangeable: bool
     leftHand: bool
+    height: int  # in cm
 
     def as_dict(self):
         return dataclasses.asdict(self)
@@ -65,6 +66,7 @@ test_state = State(
     ],
     arrangeable=True,
     leftHand=False,
+    height=175
 )
 
 

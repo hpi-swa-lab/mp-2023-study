@@ -18,6 +18,7 @@ participantId = int(input("participantId (integer only): "))
 stateId = 0
 state = None
 leftHand = False
+height = 175
 
 
 @app.route("/status")
@@ -48,6 +49,7 @@ def get_state():
             statements=[],
             arrangeable=False,
             leftHand=leftHand,
+            height=0
         )
         return state.as_json()
 
@@ -59,6 +61,7 @@ def get_state():
             statements=[],
             arrangeable=False,
             leftHand=leftHand,
+            height=height
         )
         return state.as_json()
 
@@ -75,7 +78,8 @@ def get_state():
         statements=statements,
         arrangeable=True if view in [
             Condition.DesktopDecomp, Condition.VRDecomp] else False,
-        leftHand=leftHand
+        leftHand=leftHand,
+        height=height
     )
     return state.as_json()
 
@@ -83,13 +87,15 @@ def get_state():
 @app.route("/response",  methods=['POST'])
 @cross_origin()
 def post_response():
-    global stateId, state, participantId, leftHand
+    global stateId, state, participantId, leftHand, height
 
     if state == None:
         return "state is NONE. Please call /status get request first", 400
 
     if request.json["response"]["view"] == SurveyId.DEMOGRAPHICS:
         leftHand = request.json["response"]["demographics"]["values"]["handedness"] == "left-handed"
+        height = int(request.json["response"]
+                     ["demographics"]["values"]["height"])
 
     path = f"responses/{participantId}-{stateId}.json"
     with open(path, 'x') as outfile:
