@@ -83,10 +83,13 @@ def get_state():
 @app.route("/response",  methods=['POST'])
 @cross_origin()
 def post_response():
-    global stateId, state, participantId
+    global stateId, state, participantId, leftHand
 
     if state == None:
         return "state is NONE. Please call /status get request first", 400
+
+    if request.json["response"]["view"] == SurveyId.DEMOGRAPHICS:
+        leftHand = request.json["response"]["demographics"]["values"]["handedness"] == "left-handed"
 
     path = f"responses/{participantId}-{stateId}.json"
     with open(path, 'x') as outfile:
