@@ -10,48 +10,45 @@ export function TLX({ report, loading }) {
   const questions = [
     {
       key: "mental",
-      caption: "Mental Demand",
-      question: "How mentally demanding was the task?",
-      low: "Very low",
-      high: "Very high",
+      caption: "Geistige Anforderung",
+      question: "Wie stark hat dich die Aufgabe geistig gefordert?",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "physical",
-      caption: "Physical Demand",
-      question: "How physically demanding was the task?",
-      low: "Very low",
-      high: "Very high",
+      caption: "Körperliche Anforderung",
+      question: "Wie stark hat dich die Aufgabe körperlich gefordert?",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "temporal",
-      caption: "Temporal Demand",
-      question: "How hurried or rushed was the pace of the task?",
-      low: "Very low",
-      high: "Very high",
+      caption: "Zeitdruck",
+      question: "Wie gehetzt oder unter zeitlichem Druck warst du bei der Aufgabe?",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "performance",
-      caption: "Performance",
-      question:
-        "How successful were you in accomplishing what you were asked to do?",
-      low: "Perfect",
-      high: "Failure",
+      caption: "Leistung",
+      question: "Wie erfolgreich hast du die Aufgabe erfüllen können?",
+      low: "Perfekt",
+      high: "Fehlschlag",
     },
     {
       key: "effort",
-      caption: "Effort",
-      question:
-        "How hard did you have to work to accomplish your level of performance?",
-      low: "Very low",
-      high: "Very high",
+      caption: "Anstrengung",
+      question: "Wie sehr hast du dich anstrengen müssen um dieses Level an Leistung zu erbringen?",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "frustration",
       caption: "Frustration",
-      question:
-        "How insecure, discouraged, irritated, stressed, and annoyed were you?",
-      low: "Very low",
-      high: "Very high",
+      question: "Wie unsicher, entmutigt, irritiert, gestresst oder genervt bist du gewesen?",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
   ];
 
@@ -96,7 +93,7 @@ export function TLX({ report, loading }) {
         disabled={loading}
         onClick={() => report("scores", { scores })}
       >
-        Submit
+        Absenden
       </Button>
     </Container>
   );
