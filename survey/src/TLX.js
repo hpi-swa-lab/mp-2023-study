@@ -12,43 +12,43 @@ export function TLX({ report, loading }) {
       key: "mental",
       caption: "Geistige Anforderung",
       question: "Wie stark hat dich die Aufgabe geistig gefordert?",
-      low: "Very low",
-      high: "Very high",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "physical",
       caption: "Körperliche Anforderung",
       question: "Wie stark hat dich die Aufgabe körperlich gefordert?",
-      low: "Very low",
-      high: "Very high",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "temporal",
       caption: "Zeitdruck",
       question: "Wie gehetzt oder unter zeitlichem Druck warst du bei der Aufgabe?",
-      low: "Very low",
-      high: "Very high",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "performance",
       caption: "Leistung",
       question: "Wie erfolgreich hast du die Aufgabe erfüllen können?",
-      low: "Perfect",
-      high: "Failure",
+      low: "Perfekt",
+      high: "Fehlschlag",
     },
     {
       key: "effort",
       caption: "Anstrengung",
       question: "Wie sehr hast du dich anstrengen müssen um dieses Level an Leistung zu erbringen?",
-      low: "Very low",
-      high: "Very high",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
     {
       key: "frustration",
       caption: "Frustration",
       question: "Wie unsicher, entmutigt, irritiert, gestresst oder genervt bist du gewesen?",
-      low: "Very low",
-      high: "Very high",
+      low: "Sehr wenig",
+      high: "Sehr hoch",
     },
   ];
 
@@ -93,7 +93,7 @@ export function TLX({ report, loading }) {
         disabled={loading}
         onClick={() => report("scores", { scores })}
       >
-        Submit
+        Absenden
       </Button>
     </Container>
   );
