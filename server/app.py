@@ -92,10 +92,9 @@ def post_response():
     if state == None:
         return "state is NONE. Please call /status get request first", 400
 
-    if request.json["response"]["view"] == SurveyId.DEMOGRAPHICS:
-        leftHand = request.json["response"]["demographics"]["values"]["handedness"] == "left-handed"
-        height = int(request.json["response"]
-                     ["demographics"]["values"]["height"])
+    if request.json["view"] == SurveyId.DEMOGRAPHICS:
+        leftHand = request.json["demographics"]["values"]["handedness"] == "left-handed"
+        height = int(request.json["demographics"]["values"]["height"])
 
     path = f"responses/{participantId}-{stateId}.json"
     with open(path, 'x') as outfile:
