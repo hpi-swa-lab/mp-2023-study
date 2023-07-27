@@ -100,6 +100,31 @@ def get_statements(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub1: 
     return (f"Beweise: Alle {sub3} sind {adj1}", statements)
 
 
+def get_alternative_statements(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub1: str, sub2: str, sub3: str, sub4: str, job1: str, job2: str, nat1: str, nat2: str):
+    """returns a (toProof, statements list) tuple for the given adjectives, subjects, cities and nationalities. toProof is always true and has the form 'Beweise: Alle <sub3> sind <adj1>' """
+    statements = [
+        Statement(f"alle {adj2}en, die {adj3} sind, sind {adj1}", False),
+        Statement(f"alle {sub3} sind {job1}", True),
+        Statement(f"alle {job1}, die {sub2} haben, sind {adj3}", True),
+        Statement(f"alle {sub3} sind {nat1}", True),
+        Statement(f"alle {nat1} haben {sub2}", True),
+        Statement(f"alle {sub3} sind {adj5}", False),
+        Statement(f"alle {nat1} sind {adj4}", False),
+        Statement(
+            f"alle {job1}, die {sub2} und {sub4} haben, sind {nat2}", True),
+        Statement(f"alle {adj3}en, die {sub1}e haben, sind {adj1}", True),
+        Statement(f"alle {job2}en sind {adj4}", False),
+        Statement(f"alle {nat2} haben {sub1}e", True),
+        Statement(f"alle {sub3} haben {sub4}", True),
+    ]
+    # random.shuffle(statements)
+
+    if len(set(statements)) != len(statements):
+        raise ValueError("duplicate statements")
+
+    return (f"Beweise: Alle {sub3} sind {adj1}", statements)
+
+
 def get_tutorial_statements():
     return (f"Beweise: Alle Daniel sind groß", [
         Statement("Daniel ist braunhaarig", True),
