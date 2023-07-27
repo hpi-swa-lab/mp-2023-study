@@ -114,12 +114,36 @@ def post_response():
         leftHand = request.json["demographics"]["values"]["handedness"] == "left-handed"
         height = int(request.json["demographics"]["values"]["height"])
 
-    path = f"responses/{participantId}-{stateId}.json"
-    with open(path, 'x') as outfile:
-        json.dump({
-            "task": state.as_dict(),
-            "response": request.json
-        }, outfile, indent=4, ensure_ascii=False)
+    path = f"responses/{participantId}-{stateId}"
+    try:
+        with open(f"{path}.json", 'x') as outfile:
+            json.dump({
+                "task": state.as_dict(),
+                "response": request.json
+            }, outfile, indent=4, ensure_ascii=False)
+    except Exception as e:
+        print("file already existed, fallback to -REPEATED file")
+        with open(f"{path}-REPEATED.json", 'w+') as outfile:
+            json.dump({
+                "task": state.as_dict(),
+                "response": request.json
+            }, outfile, indent=4, ensure_ascii=False)
 
     stateId += 1
+    return "OK"
+
+
+@app.route("/forceNext",  methods=['POST'])
+@cross_origin()
+def force_next():
+    global stateId
+    stateId += 1
+    return "OK"
+
+
+@app.route("/setStateId",  methods=['POST'])
+@cross_origin()
+def setStateId():
+    global stateId
+    stateId = int(request.json["stateId"])
     return "OK"
