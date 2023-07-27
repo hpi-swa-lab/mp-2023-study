@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 import json
 from latinsquare import balancedLatinSquare
 from statement import *
-
+import os.path
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -71,14 +71,21 @@ def get_state():
         )
         return state.as_json()
 
-    only_conditions = [c for c in views[0:(stateId+1)] if c in conditions]
+    all_conditions_so_far = [
+        c for c in views[0:(stateId+1)] if c in conditions]
     # remove tutorial conditions
-    only_conditions = [c for i, c in enumerate(
-        only_conditions) if only_conditions.index(c) != i]
-    task_index = len(only_conditions) - 1
+    all_conditions_so_far = [c for i, c in enumerate(
+        all_conditions_so_far) if all_conditions_so_far.index(c) != i]
+    task_index = len(all_conditions_so_far) - 1
 
-    (toProof, statements) = get_statements(
+    toProof, statements = get_statements(
         *[statementsMatrix[n][task_index] for n in range(len(statementsMatrix))])
+
+    # if file exists, we repeated this statement, so we show different statements
+    # the response is saved in a file with -REPEATED suffix
+    if os.path.isfile(f"responses/{participantId}-{stateId}.json"):
+        toProof, statements = get_statements(
+            *[statementsMatrix[n][random.randint(0, len(statementsMatrix[0]) - 1)] for n in range(len(statementsMatrix))])
 
     state = State(
         view=view,
