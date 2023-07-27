@@ -23,7 +23,8 @@ body {
 
 .information-bit {
     position: absolute;
-    width: 400px;
+    width: 380px;
+    height: 65px;
 }
 
 .prevent-select {

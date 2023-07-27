@@ -1,6 +1,6 @@
 
 
-function createInformationContainer(information, draggable) {
+function createInformationContainer(information) {
     let div = document.createElement("div");
     div.classList.add("card");
     div.classList.add("information-bit");
@@ -8,9 +8,6 @@ function createInformationContainer(information, draggable) {
     informationP.classList.add("prevent-select");
     informationP.innerText = information;
     div.appendChild(informationP);
-    if (!draggable) {
-        div.onmouseup = () => { div.classList.contains("selected") ? div.classList.remove("selected") : div.classList.add("selected") }
-    }
     return div;
 }
 
@@ -29,21 +26,24 @@ function buildTask(stmts, toProof, arrangeable) {
     informationContainer1.innerHTML = "";    
 
     let columnHeight = 7;
-    let elementHeight = 60;
+    let elementHeight = 70;
+
     statements.forEach((statementSpec, index) => {
         let informationBit = statementSpec.text;
         statementSpec.index = index; // Write index here to match correct answers later.
-        let container = createInformationContainer(informationBit, arrangeable);
-        if (arrangeable) {
-            dragElement(container);
-        }
+        let container = createInformationContainer(informationBit);
+
+        dragElement(container, arrangeable);
+
         informationContainer1.appendChild(container);
         if (index + 1 < columnHeight) {
             container.style.left = 10 + 'px';
             container.style.top = index * elementHeight + 'px';
+            container.setAttribute("statement-group", 1);
         } else {
-            container.style.left = 420 + 'px';
+            container.style.left = 400 + 'px';
             container.style.top = (index + 1 - columnHeight) * elementHeight + 'px';
+            container.setAttribute("statement-group", 2);
         }
 
         container.setAttribute('statement-index', index);
@@ -75,11 +75,16 @@ function endStudy() {
     console.log(result);
 }
 
+function getElementsInSameGroup(element) {
+    let group = element.getAttribute("statement-group");
+    return [... document.querySelectorAll(`[statement-group="${group}"]`)];
+}
+
 let zIndexCounter = 1;
 
 // https://www.w3schools.com/howto/howto_js_draggable.asp
-function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+function dragElement(elmnt, individuallyArrangable) {
+    var xOffset = 0, yOffset = 0, initialX = 0, initialY = 0;
     var onclickBackup = elmnt.onclick;
     elmnt.onmousedown = dragMouseDown;
     elmnt.onclick = null;
@@ -87,13 +92,15 @@ function dragElement(elmnt) {
     var originalTop = 0;
     var originalLeft = 0;
 
+    var sameGroupElements = [];
+
 
     function dragMouseDown(e) {
         e = e || window.event;
         e.preventDefault();
         // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+        initialX = e.clientX;
+        initialY = e.clientY;
         document.onmouseup = closeDragElement;
         // call a function whenever the cursor moves:
         document.onmousemove = elementDrag;
@@ -101,19 +108,28 @@ function dragElement(elmnt) {
         originalTop = elmnt.offsetTop;
         originalLeft = elmnt.offsetLeft;
         elmnt.style.zIndex = zIndexCounter++;
+        sameGroupElements = getElementsInSameGroup(elmnt);
     }
 
     function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
         // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+        xOffset = initialX - e.clientX;
+        yOffset = initialY - e.clientY;
+        initialX = e.clientX;
+        initialY = e.clientY;
         // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        if(individuallyArrangable) {
+        elmnt.style.top = (elmnt.offsetTop - yOffset) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - xOffset) + "px";
+        } else {
+            sameGroupElements.forEach(e => {
+                e.style.top = (e.offsetTop - yOffset) + "px";
+                e.style.left = (e.offsetLeft - xOffset) + "px";
+            })
+        }
+
     }
 
     function closeDragElement(e) {
@@ -181,11 +197,14 @@ function addVRHint() {
     document.getElementById("vr-hint").innerHTML = "<h1>Der nächste Part der Studie findet in VR statt.</h1>";
 }
 
+function addDoneHint() {
+    document.getElementById("vr-hint").innerHTML = "<h1>Danke für die Mitwirkung!</h1>";
+}
+
 function updateUIForState(state) {
     document.getElementsByClassName("react-imported-div")[0]?.remove();
     document.getElementById("vr-hint").innerHTML = "";
-    document.getElementById("study-part-pc").classList.add("hidden")
-    document.getElementById("study-done").classList.add("hidden")
+    document.getElementById("study-part-pc").classList.add("hidden");
     if (state.view.startsWith("Desktop")) {
         buildTask(state.statements, state.toProof, state.arrangeable)
     } else if (state.view == "demographics" || state.view == "tlx") {
@@ -193,7 +212,7 @@ function updateUIForState(state) {
     } else if (state.view.startsWith("VR")) {
         addVRHint();
     } else if (state.view == "done") {
-        document.getElementById("study-done").classList.remove("hidden")
+        addDoneHint();
     }
 
 }
