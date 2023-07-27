@@ -37,15 +37,15 @@ class Connection {
     }
 
     finishTask(duration) {
-        this.report({ view: this.currentState.view, duration })
-        setTimeout(this.poll(), 100);
+        this.report({ view: this.currentState.view, duration });
+        setTimeout(() => this.poll(), 100);
     }
 
     reportSurvey(event, extra) {
         let data = { view: this.currentState.view };
         data[event] = extra;
         this.report(data);
-        setTimeout(this.poll(), 100);
+        setTimeout(() => this.poll(), 100);
     }
 
 

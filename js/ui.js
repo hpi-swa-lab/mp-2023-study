@@ -20,15 +20,15 @@ function buildTask(stmts, toProof, arrangeable) {
     document.getElementById("study-part-pc").classList.remove("hidden");
     document.getElementById("information-container-1").classList.add("hidden");
     document.getElementById("statement").classList.add("hidden");
-    document.getElementById("answer").classList.add("hidden");
-    document.getElementById("answer-feedback").innerText = "";
+    document.getElementById("check-answer-button").classList.add("hidden");
+    document.getElementById("answer-feedback").innerHTML = "&zwnj;";
     document.getElementById("check-answer-button").disabled = false;
     statements = stmts;
 
     let informationContainer1 = document.getElementById("information-container-1");
     informationContainer1.innerHTML = "";    
 
-    let columnHeight = 8;
+    let columnHeight = 7;
     let elementHeight = 60;
     statements.forEach((statementSpec, index) => {
         let informationBit = statementSpec.text;
@@ -62,7 +62,7 @@ let taskStartTime = 0;
 function startStudy() {
     document.getElementById("information-container-1").classList.remove("hidden");
     document.getElementById("statement").classList.remove("hidden");
-    document.getElementById("answer").classList.remove("hidden");
+    document.getElementById("check-answer-button").classList.remove("hidden");
     taskStartTime = Date.now();
 }
 
@@ -159,10 +159,14 @@ function checkAnswers() {
         let taskEndTime = Date.now();
         let duration = taskEndTime - taskStartTime;
         answerFeedback.innerText = "Die Auswahl ist korrekt.";
+        answerFeedback.classList.add("animate-green")
+        setTimeout(() => answerFeedback.classList.remove("animate-green"), 700)
         document.getElementById("check-answer-button").disabled = true;
         window.connection.finishTask(duration);
     } else {
         answerFeedback.innerText = "Die Auswahl ist nicht korrekt.";
+        answerFeedback.classList.add("animate-red")
+        setTimeout(() => answerFeedback.classList.remove("animate-red"), 700)
     }
 }
 
@@ -180,15 +184,16 @@ function addVRHint() {
 function updateUIForState(state) {
     document.getElementsByClassName("react-imported-div")[0]?.remove();
     document.getElementById("vr-hint").innerHTML = "";
+    document.getElementById("study-part-pc").classList.add("hidden")
+    document.getElementById("study-done").classList.add("hidden")
     if (state.view.startsWith("Desktop")) {
-
         buildTask(state.statements, state.toProof, state.arrangeable)
     } else if (state.view == "demographics" || state.view == "tlx") {
-        document.getElementById("study-part-pc").classList.add("hidden")
         addSurvey(state.view);
     } else if (state.view.startsWith("VR")) {
-        document.getElementById("study-part-pc").classList.add("hidden")
         addVRHint();
+    } else if (state.view == "done") {
+        document.getElementById("study-done").classList.remove("hidden")
     }
 
 }

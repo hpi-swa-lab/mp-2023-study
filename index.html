@@ -23,37 +23,26 @@
     <div id="react-anchor"></div>
     <div id="vr-hint"></div>
     <div id="study-part-pc" class="hidden">
-        <button id="start-study-button" class="btn">Aufgabe beginnen</button>
+        <div class="row">
+            <div class="col-2">
+                <button id="start-study-button" class="btn">Aufgabe beginnen</button>
+            </div>
+            <div class="col-8">
+                <div style="text-align: center;">
+                    <p class="hidden" id="statement"></p>
+                    <p id="answer-feedback"></p>
+                </div>
+            </div>
+            <div class="col-2">
+                <button class="btn" id="check-answer-button" type='button'>Antworten prüfen</button>
+            </div>
+        </div>
         <div class="row">
             <div class="hidden col-lg" id="information-container-1">
             </div>
-            <!--
-            <div class="hidden col-lg" id="information-container-2">
-            </div>-->
-            <div class="col-2 ">
-                <p class="hidden" id="statement"></p>
-                <div class="hidden" id="answer">
-                    <form id="answer-form" onsubmit="(e) => e.preventDefault()">
-                        <button class="btn" id="check-answer-button" type='button'>Antworten prüfen</button>
-                        <p id="answer-feedback"></p>
-                        <!--
-                <fieldset>
-                    <legend>Select the correct answer:</legend>
-                    <div>
-                        <input type="radio" id="answer-a" name="answer" autocomplete="off" value="a" />
-                        <label for="answer-a">This statement is true</label>
-                        </br>
-                        <input type="radio" id="answer-b" name="answer" autocomplete="off" value="b"/>
-                        <label for="answer-b">This statement is false</label>
-
-                    </div>
-                </fieldset>-->
-                    </form>
-                    <h2 id="time"></h2>
-                </div>
-            </div>
         </div>
     </div>
+    <div id="study-done" class="hidden"><h1>Danke für die Mitwirkung!</h1></div>
     <!-- BOOTSTRAP -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
