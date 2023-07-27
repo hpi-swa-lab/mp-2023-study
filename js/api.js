@@ -1,10 +1,13 @@
 
-let server = "http://127.0.0.1:5000/status";
-let serverResponse = "http://127.0.0.1:5000/response";
+let server = "http://127.0.0.1:5000/";
+let serverStatus = server + "status";
+let serverResponse = server + "response";
+let serverForceNext = server + "forceNext";
+let serverSetStateId = server + "setStateId";
 class Connection {
-    
+
     async poll() {
-        const response = await fetch(server, {
+        const response = await fetch(serverStatus, {
             method: "GET",
             mode: "cors"
         })
@@ -60,6 +63,24 @@ class Connection {
 
     stop() {
         this.stopped = true;
+    }
+
+    forceNext() {
+        fetch(serverForceNext, {
+            method: "POST",
+            mode: "cors"
+        })
+    }
+
+    setStateId(newStateId) {
+        fetch(serverSetStateId, {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "stateId": newStateId })
+        })
     }
 }
 
