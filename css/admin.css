@@ -1,0 +1,10 @@
+body {
+    color: lightgreen;
+    background-color: #000;
+    height: 100%;
+    width: 100%;
+}
+
+* {
+    font-family: 'Roboto Mono', monospace;
+}
