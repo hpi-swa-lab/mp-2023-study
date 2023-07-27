@@ -21,15 +21,6 @@ leftHand = False
 height = 175
 
 
-def printConditions():
-    print("Conditions:")
-    print(json.dumps(balancedLatinSquare(
-        conditions, participantId % len(conditions))))
-
-
-printConditions()
-
-
 @app.route("/status")
 @cross_origin()
 def get_state():
@@ -59,7 +50,9 @@ def get_state():
             statements=[],
             arrangeable=False,
             leftHand=leftHand,
-            height=0
+            height=0,
+            _views=views,
+            _conditions=experiment_conditions
         )
         return state.as_json()
 
@@ -72,7 +65,9 @@ def get_state():
             statements=statements,
             arrangeable=view in [Condition.DesktopDecomp, Condition.VRDecomp],
             leftHand=leftHand,
-            height=height
+            height=height,
+            _views=views,
+            _conditions=experiment_conditions
         )
         return state.as_json()
 
@@ -92,7 +87,9 @@ def get_state():
         statements=statements,
         arrangeable=view in [Condition.DesktopDecomp, Condition.VRDecomp],
         leftHand=leftHand,
-        height=height
+        height=height,
+        _views=views,
+        _conditions=experiment_conditions
     )
     return state.as_json()
 
@@ -101,8 +98,6 @@ def get_state():
 @cross_origin()
 def post_response():
     global stateId, state, participantId, leftHand, height
-
-    printConditions()
 
     if state == None:
         return "state is NONE. Please call GET /status request first", 400

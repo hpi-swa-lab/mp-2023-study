@@ -34,6 +34,8 @@ class State:
     arrangeable: bool
     leftHand: bool
     height: int  # in cm
+    _views: List[Survey | Condition]  # for diagnostics
+    _conditions: List[Condition]  # for diagnostics
 
     def as_dict(self):
         return dataclasses.asdict(self)
@@ -66,7 +68,10 @@ test_state = State(
     ],
     arrangeable=True,
     leftHand=False,
-    height=175
+    height=175,
+    _views=[Survey.DEMOGRAPHICS, Survey.TLX,
+            Survey.DONE, Condition.DesktopDecomp],
+    _conditions=[Condition.DesktopNoDecomp, Condition.DesktopDecomp]
 )
 
 
