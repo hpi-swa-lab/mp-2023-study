@@ -21,6 +21,15 @@ leftHand = False
 height = 175
 
 
+def printConditions():
+    print("Conditions:")
+    print(json.dumps(balancedLatinSquare(
+        conditions, participantId % len(conditions))))
+
+
+printConditions()
+
+
 @app.route("/status")
 @cross_origin()
 def get_state():
@@ -31,18 +40,18 @@ def get_state():
     print(json.dumps(experiment_conditions))
 
     views = [
-        SurveyId.DEMOGRAPHICS,
-        [[c, c, c, SurveyId.TLX] for c in experiment_conditions]
+        Survey.DEMOGRAPHICS,
+        [[c, c, c, c, Survey.TLX] for c in experiment_conditions],
+        Survey.DONE
     ]
-    views = list(flatten(views))
+    views: List[Survey | Condition] = list(flatten(views))
 
     if stateId >= len(views):
-        raise Exception(
-            "finished. Restart sever with new participantId to start again.")
+        return "finished. Restart sever with new participantId to start again.", 400
 
     view = views[stateId]
 
-    if view == SurveyId.DEMOGRAPHICS:
+    if view == Survey.DEMOGRAPHICS or view == Survey.TLX or view == Survey.DONE:
         state = State(
             view=view,
             stateId=stateId,
@@ -54,19 +63,23 @@ def get_state():
         )
         return state.as_json()
 
-    if view == SurveyId.TLX:
+    if views.index(view) == stateId:
+        toProof, statements = get_tutorial_statements()
         state = State(
             view=view,
             stateId=stateId,
-            toProof="",
-            statements=[],
-            arrangeable=False,
+            toProof=toProof,
+            statements=statements,
+            arrangeable=view in [Condition.DesktopDecomp, Condition.VRDecomp],
             leftHand=leftHand,
             height=height
         )
         return state.as_json()
 
     only_conditions = [c for c in views[0:(stateId+1)] if c in conditions]
+    # remove tutorial conditions
+    only_conditions = [c for i, c in enumerate(
+        only_conditions) if only_conditions.index(c) != i]
     task_index = len(only_conditions) - 1
 
     (toProof, statements) = get_statements(
@@ -77,8 +90,7 @@ def get_state():
         stateId=stateId,
         toProof=toProof,
         statements=statements,
-        arrangeable=True if view in [
-            Condition.DesktopDecomp, Condition.VRDecomp] else False,
+        arrangeable=view in [Condition.DesktopDecomp, Condition.VRDecomp],
         leftHand=leftHand,
         height=height
     )
@@ -90,10 +102,15 @@ def get_state():
 def post_response():
     global stateId, state, participantId, leftHand, height
 
-    if state == None:
-        return "state is NONE. Please call /status get request first", 400
+    printConditions()
 
-    if request.json["view"] == SurveyId.DEMOGRAPHICS:
+    if state == None:
+        return "state is NONE. Please call GET /status request first", 400
+
+    if "stateId" in request.json and stateId != request.json["stateId"]:
+        return "stateId mismatch. This is probably caused by repeated POST /response without an update in the frontend ui", 400
+
+    if "view" in request.json and request.json["view"] == Survey.DEMOGRAPHICS:
         leftHand = request.json["demographics"]["values"]["handedness"] == "left-handed"
         height = int(request.json["demographics"]["values"]["height"])
 

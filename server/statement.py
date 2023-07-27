@@ -6,7 +6,7 @@ import json
 import random
 
 
-class SurveyId(str, Enum):
+class Survey(str, Enum):
     DEMOGRAPHICS = "demographics"
     TLX = "tlx"
     DONE = "done"
@@ -27,7 +27,7 @@ class Statement:
 
 @dataclass()
 class State:
-    view: SurveyId | Condition
+    view: Survey | Condition
     stateId: int
     toProof: str
     statements: List[Statement]
@@ -43,7 +43,7 @@ class State:
 
 
 test_state = State(
-    view=SurveyId.DEMOGRAPHICS,
+    view=Survey.DEMOGRAPHICS,
     stateId=2,
     toProof="Beweise: Alle Weintrinker sind rothaarig",
     statements=[
@@ -93,6 +93,14 @@ def get_statements(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub1: 
         raise ValueError("duplicate statements")
 
     return (f"Beweise: Alle {sub3} sind {adj1}", statements)
+
+
+def get_tutorial_statements():
+    return (f"Beweise: Alle Daniel sind groß", [
+        Statement("Daniel ist braunhaarig", True),
+        Statement("Alle braunhaarigen sind groß", True),
+        Statement("Alle großen sind nett", False)
+    ])
 
 
 statementsMatrix = [
