@@ -41,6 +41,34 @@ body {
 }
 
 .frequency-slider .MuiSlider-markLabel {
-    font-size: 0.6em;
+    font-size: 0.8em;
     transform: rotate(10deg);
+}
+
+@keyframes blink-green {
+    from {
+        color: #000;
+    }
+
+    to {
+        color: green;
+    }
+}
+
+@keyframes blink-red {
+    from {
+        color: #000;
+    }
+
+    to {
+        color: red;
+    }
+}
+
+.animate-red {
+    animation: blink-red 0.7s ease-in-out 0s;
+}
+
+.animate-green {
+    animation: blink-green 0.7s ease-in-out 0s;
 }
