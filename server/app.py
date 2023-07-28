@@ -12,7 +12,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 conditions = [Condition.DesktopNoDecomp, Condition.DesktopDecomp,
               Condition.VRDecomp, Condition.VRNoDecomp]
 
-tasks_per_condition = int(len(statementsMatrix[0]) / len(conditions))
+tasks_per_condition = int(len(statements_matrix[0]) / len(conditions))
 
 participantId = int(input("participantId (integer only): "))
 stateId = 0
@@ -78,12 +78,12 @@ def get_state():
         all_conditions_so_far) if all_conditions_so_far.index(c) != i]
     task_index = len(all_conditions_so_far) - 1
 
-    toProof, statements = get_statements(
-        *[statementsMatrix[n][task_index] for n in range(len(statementsMatrix))])
+    toProof, statements = get_statements(task_index)
 
     # if file exists, we repeated this statement, so we show different statements
     # the response is saved in a file with -REPEATED suffix
     if os.path.isfile(f"responses/{participantId}-{stateId}.json"):
+        # TODO broken right now
         toProof, statements = get_statements(
             *[statementsMatrix[n][random.randint(0, len(statementsMatrix[0]) - 1)] for n in range(len(statementsMatrix))])
 
