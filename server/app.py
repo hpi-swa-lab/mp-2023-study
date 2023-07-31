@@ -4,6 +4,7 @@ import json
 from latinsquare import balancedLatinSquare
 from statement import *
 import os.path
+import os
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -115,6 +116,9 @@ def post_response():
     if "view" in request.json and request.json["view"] == Survey.DEMOGRAPHICS:
         leftHand = request.json["demographics"]["values"]["handedness"] == "left-handed"
         height = int(request.json["demographics"]["values"]["height"])
+
+    if not os.path.exists("responses"):
+        os.makedirs("responses")
 
     path = f"responses/{participantId}-{stateId}"
     try:

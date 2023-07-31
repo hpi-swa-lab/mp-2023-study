@@ -75,7 +75,7 @@ test_state = State(
 )
 
 def get_statements(task_index: int):
-    statement_structures = [get_statements_v1, get_statements_v2, get_statements_v3]
+    statement_structures = [get_statements_v3, get_statements_v1, get_statements_v2]
     structure = statement_structures[task_index % len(statement_structures)]
     (proof, statements) = structure(*[statements_matrix[n][task_index] for n in range(len(statements_matrix))])
 
@@ -113,6 +113,7 @@ def get_statements_v2(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub
         Statement(f"alle {sub3} sind {job1}", True),
         Statement(f"alle {job1}, die {sub2} haben, sind {adj3}", True),
         Statement(f"alle {sub3} sind {nat1}", True),
+        Statement(f"alle {nat1} haben {sub2}", True),
         Statement(f"alle {sub3} sind {adj5}", False),
         Statement(f"alle {nat1} sind {adj4}", False),
         Statement(f"alle {job1}, die {sub2} und {sub4} haben, sind {nat2}", True),
@@ -126,20 +127,20 @@ def get_statements_v2(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub
 def get_statements_v3(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub1: str, sub2: str, sub3: str, sub4: str, job1: str, job2: str, nat1: str, nat2: str):
     """returns a (toProof, statements list) tuple for the given adjectives, subjects, cities and nationalities. toProof is always true and has the form 'Beweise: Alle <sub3> sind <adj1>' """
     statements = [
-        Statement(f"alle {sub2} sind {adj5}", True),
-        Statement(f"alle {sub2}, die {adj5} sind, sind {adj2}", True),
-        Statement(f"alle {adj2}en, sind {job1}", True),
-        Statement(f"alle {sub2}, sind {nat1}", True),
-        Statement(f"alle {sub2}, die {nat1} sind, sind {adj1}", True),
-        Statement(f"alle {adj1}en, die {nat1} sind, sind {job1}", True),
-        Statement(f"alle {job1}, sind {adj4}", True),
-        Statement(f"alle {sub2}, die {job2} sind, sind {nat2}", False),
+        Statement(f"alle {sub3} sind {adj5}", True),
+        Statement(f"alle {sub3}, die {adj5} sind, sind {adj2}", True),
+        Statement(f"alle {adj2}en sind {job1}", False),
+        Statement(f"alle {sub3} sind {nat1}", True),
+        Statement(f"alle {sub3}, die {nat1} sind, sind {adj1}", True),
+        Statement(f"alle {adj1}en, die {nat1} sind, sind {job2}", True),
+        Statement(f"alle {job2}, die {adj2} sind, sind {adj4}", True),
+        Statement(f"alle {sub3}, die {job2} sind, sind {nat2}", False),
         Statement(f"alle {nat2}, die {job2} sind, haben {sub4}", False),
-        Statement(f"alle {sub3}, sind {nat2}", False),
-        Statement(f"alle {adj2}en, haben {sub4}", False),
+        Statement(f"alle {sub2} sind {nat2}", False),
+        Statement(f"alle {adj2}en haben {sub4}", False),
         Statement(f"alle {nat2}, die {sub4} haben, sind {adj4}", False),
     ]
-    return (f"Beweise: alle {sub2} sind {adj4}", statements)
+    return (f"Beweise: alle {sub3} sind {adj4}", statements)
 
 def get_tutorial_statements():
     return (f"Beweise: Alle Daniel sind groß", [
