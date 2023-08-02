@@ -85,8 +85,7 @@ def get_state():
     # the response is saved in a file with -REPEATED suffix
     if os.path.isfile(f"responses/{participantId}-{stateId}.json"):
         # TODO broken right now
-        toProof, statements = get_statements(
-            *[statementsMatrix[n][random.randint(0, len(statementsMatrix[0]) - 1)] for n in range(len(statementsMatrix))])
+        toProof, statements = get_statements(task_index)
 
     state = State(
         view=view,
@@ -136,7 +135,7 @@ def post_response():
             }, outfile, indent=4, ensure_ascii=False)
 
     stateId += 1
-    return "OK"
+    return "\"OK\""
 
 
 @app.route("/forceNext",  methods=['POST'])
@@ -144,7 +143,7 @@ def post_response():
 def force_next():
     global stateId
     stateId += 1
-    return "OK"
+    return "\"OK\""
 
 
 @app.route("/setStateId",  methods=['POST'])
@@ -152,4 +151,4 @@ def force_next():
 def setStateId():
     global stateId
     stateId = int(request.json["stateId"])
-    return "OK"
+    return "\"OK\""
