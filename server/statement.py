@@ -137,7 +137,7 @@ def get_statements_v3(adj1: str, adj2: str, adj3: str, adj4: str, adj5: str, sub
         Statement(f"alle {sub3}, die {job2} sind, sind {nat2}", False),
         Statement(f"alle {nat2}, die {job2} sind, haben {sub4}", False),
         Statement(f"alle {sub2} sind {nat2}", False),
-        Statement(f"alle {adj2}en haben {sub4}", False),
+        Statement(f"alle {adj2}en haben {sub1}e", False),
         Statement(f"alle {nat2}, die {sub4} haben, sind {adj4}", False),
     ]
     return (f"Beweise: alle {sub3} sind {adj4}", statements)
