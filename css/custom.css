@@ -73,10 +73,3 @@ body {
 .animate-green {
     animation: blink-green 0.7s ease-in-out 0s;
 }
-
-.admin {
- color: lightgreen;
- background-color: #000;
- height: 100%;
- width: 100%;
-}
