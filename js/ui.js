@@ -23,7 +23,7 @@ function buildTask(stmts, toProof, arrangeable) {
     statements = stmts;
 
     let informationContainer1 = document.getElementById("information-container-1");
-    informationContainer1.innerHTML = "";    
+    informationContainer1.innerHTML = "";
 
     let columnHeight = 7;
     let elementHeight = 70;
@@ -77,7 +77,7 @@ function endStudy() {
 
 function getElementsInSameGroup(element) {
     let group = element.getAttribute("statement-group");
-    return [... document.querySelectorAll(`[statement-group="${group}"]`)];
+    return [...document.querySelectorAll(`[statement-group="${group}"]`)];
 }
 
 let zIndexCounter = 1;
@@ -120,9 +120,9 @@ function dragElement(elmnt, individuallyArrangable) {
         initialX = e.clientX;
         initialY = e.clientY;
         // set the element's new position:
-        if(individuallyArrangable) {
-        elmnt.style.top = (elmnt.offsetTop - yOffset) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - xOffset) + "px";
+        if (individuallyArrangable) {
+            elmnt.style.top = (elmnt.offsetTop - yOffset) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - xOffset) + "px";
         } else {
             sameGroupElements.forEach(e => {
                 e.style.top = (e.offsetTop - yOffset) + "px";
@@ -133,7 +133,6 @@ function dragElement(elmnt, individuallyArrangable) {
     }
 
     function closeDragElement(e) {
-        // console.log("on mouse up")
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
@@ -141,13 +140,7 @@ function dragElement(elmnt, individuallyArrangable) {
         e.preventDefault();
         elmnt.onclick = onclickBackup;
 
-        /*console.log(`
-        offset top ${elmnt.offsetTop},
-        original Top ${originalTop},
-        offset left ${elmnt.offsetLeft},
-        original left ${originalLeft}`)*/
         if (elmnt.offsetTop == originalTop && elmnt.offsetLeft == originalLeft) {
-            // console.log("No drag")
             // No drag has happened
             elmnt.classList.contains("selected") ? elmnt.classList.remove("selected") : elmnt.classList.add("selected")
         }
